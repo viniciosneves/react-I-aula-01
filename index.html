@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas em React</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .container {
+            width: 446px;
+            margin: 16px auto;
+            box-sizing: border-box;
+            padding: 16px;
+            background: #FFEAF1;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            min-height: 100vh;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #000;
+        }
+
+        .titulo {
+            border-bottom: 1px solid #BCBCBC;
+            padding-bottom: 16px;
+        }
+        
+    </style>
+
+    <script type="text/babel">
+
+        function Titulo({ children }) {
+            return (
+                <h1 className="titulo">
+                    {children}
+                </h1>
+            )
+        }
+
+        function TodoItem({ descricao }) {
+            const [concluida, setConcluida] = React.useState(false);
+
+            function manipularMudancaEstado() {
+                console.log('mudei')
+                setConcluida(!concluida)
+            }
+
+            return (
+                <div>
+                    <label className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            className="checkbox"
+                            checked={concluida}
+                            onChange={manipularMudancaEstado}
+                        />
+                        {descricao}
+                    </label>
+                </div>
+            );
+        }
+
+        function TodoList() {
+            const tarefas = ["Aprender React", "Revisar JSX", "Construir uma App"];
+
+            return (<div className="container">
+
+                <Titulo>Tarefas</Titulo>
+
+                {tarefas.map((tarefa, index) => (
+                    <TodoItem key={index} descricao={tarefa} />
+                ))}
+
+            </div>)
+        }
+
+        const elementoAlvo = document.getElementById('root')
+        const root = ReactDOM.createRoot(elementoAlvo);
+        root.render(<TodoList />);
+
+    </script>
+</body>
+
+</html>
